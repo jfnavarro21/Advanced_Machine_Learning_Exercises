@@ -1,16 +1,4 @@
 
-# coding: utf-8
-
-# # Advanced Machine Learning (MScA, 32017)
-# 
-# # Project: Paraphrase Detection
-# 
-# # Part 2: Solution by recurrent neural network
-# 
-# ### Yuri Balasanov, Leonid Nazarov, &copy; iLykei 2017
-# 
-# Keras provides tools for Natural Language Processing including preprocessing text and working with pre-trained word embeddings. The goal of this notebook is to describe those tools and to give some basic examples of using them.
-
 # In[1]:
 
 
@@ -390,7 +378,7 @@ with open('./savedData/test_data_2.pkl', 'wb') as f: pickle.dump(test_data_2, f,
 # 
 # The loss function to be minimized is *loss='binary_crossentropy'*.
 
-# # Task description
+
 # 
 # 1. Prepare train and test data for network in local environment.
 # 2. Implement the network above and tune it in local environment with part of the train data. <br>
