@@ -498,26 +498,31 @@ def getModel(lstmneurons=10, droprate=.1,  neurons1=10, neurons2=10, stdev=.1):
 
 # Use the function to create the model
 model1=getModel()
+# Define early stopping callback
+early_stopping = EarlyStopping(monitor="val_loss", patience=1)
 # Train the model for a fixed number of epochs
-model1.fit([data_1, data_2, data_3], Ytrain, epochs=200, batch_size=512,verbose=2,validation_split=0.2)
+model1.fit([data_1, data_2, data_3], Ytrain, epochs=200, batch_size=512,verbose=2,validation_split=0.2,callbacks=[early_stopping])
+# print loss of each epoch
+print('LSTM : loss = ',min(model1.history['val_loss']),' epochs =',
+      len(model1.history['val_loss']))
 
 
 # In[26]:
 
-
+# create predictions
 predictions=model1.predict([test_data_1,test_data_2],512)
 
 
 # In[ ]:
 
 
-# def pro of one func
+# def prob of one func
 prob_of_one_udf = func.udf(lambda v: float(v[1]), FloatType())
 
 
 # In[ ]:
 
-
+# create and show head of output dataframe
 outdf = predictions.withColumn('predict', func.round(prob_of_one_udf('probability'),6)).select('id','predict')
 outdf.cache()
 outdf.show(6)
@@ -526,7 +531,7 @@ outdf.show(6)
 # In[ ]:
 
 
-# write csv
+# write to csv
 outdf.orderBy('id').coalesce(1).write.csv(outPath,header=True,mode='overwrite',quote="")
 
 
